@@ -24,7 +24,7 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(RandomInstancesOf)]
 		public static IList<object> DoRandomInstancesOf(int count, string typeName)
 		{
-			var type = GetTypeByName(typeName);
+			var type = FeatureContext.Current.GetTypeByName(typeName);
 
 			var listMethod = typeof (IGenerationSession).GetMethod("List");
 			var listTypeMethod = listMethod.MakeGenericMethod(type);
@@ -41,7 +41,7 @@ namespace Steckbrett.SpecsSupport.Steps
 
 			var result = list.Cast<object>().ToList();
 
-			var all = InstancesOf(type);
+			var all = ScenarioContext.Current.InstancesOf(type);
 			foreach (var item in result)
 			{
 				all.Add(item);
@@ -79,7 +79,7 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(RandomInstancesPassedTo)]
 		public static void DoRandomInstancesPassedTo(int count, string parentMethod, string parentTypeName, string parentId)
 		{
-			var parent = GetInstanceByIdToken(parentTypeName, parentId);
+			var parent = ScenarioContext.Current.GetInstanceByIdToken(parentTypeName, parentId);
 			var argumentTypeName = GetArgumentTypeName(parent.GetType(), parentMethod);
 			var children = DoRandomInstancesOf(count, argumentTypeName);
 			PassToParentMethod(parent, parentMethod, children);
@@ -91,7 +91,7 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(RandomInstancesOfPassedTo)]
 		public static void DoRandomInstancesOfPassedTo(int count, string argumentTypeName, string parentMethod, string parentTypeName, string parentId)
 		{
-			var parent = GetInstanceByIdToken(parentTypeName, parentId);
+			var parent = ScenarioContext.Current.GetInstanceByIdToken(parentTypeName, parentId);
 			var children = DoRandomInstancesOf(count, argumentTypeName);
 			PassToParentMethod(parent, parentMethod, children);
 		}

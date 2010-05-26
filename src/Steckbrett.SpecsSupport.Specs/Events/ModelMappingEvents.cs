@@ -17,9 +17,9 @@ namespace Steckbrett.SpecsSupport.Specs.Events
 		[BeforeFeature("model_mapping")]
 		static void ModelConfiguration()
 		{
-			AddModelNamespace("Steckbrett.SpecsSupport.Specs.Model");
+			FeatureContext.Current.AddModelNamespace("Steckbrett.SpecsSupport.Specs.Model");
 
-			SetModelIdExtractor(o => ((ModelBase) o).Id);
+			FeatureContext.Current.SetModelIdExtractor(o => ((ModelBase)o).Id);
 		}
 
 		[BeforeFeature("model_mapping")]

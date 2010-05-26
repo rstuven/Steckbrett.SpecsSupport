@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
 using Steckbrett.SpecsSupport.Specs.Model;
-using Steckbrett.SpecsSupport.Steps;
 using TechTalk.SpecFlow;
 
 namespace Steckbrett.SpecsSupport.Specs.Steps
@@ -12,7 +11,7 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 	}
 
 	[Binding]
-	class ModelSteps : ModelBindingBase
+	class ModelSteps
 	{
 		private readonly ModelStepsContext ctx;
 
@@ -25,13 +24,13 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 		public void GivenAnInstanceOfCustomerWithId(int customerId)
 		{
 			var customer = new Customer {Id = customerId};
-			AddInstance(customer);
+			ScenarioContext.Current.AddInstance(customer);
 		}
 
 		[When(@"^I get an instance of Customer with Id (\d+)$")]
 		public void WhenIGetAnInstanceOfCustomerWithId(int customerId)
 		{
-			ctx.Customer = InstanceById<Customer>(customerId);
+			ctx.Customer = ScenarioContext.Current.InstanceById<Customer>(customerId);
 		}
 
 		[Then(@"^I should get null$")]
@@ -52,7 +51,7 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 		{
 			for (int i = 0; i < count; i++)
 			{
-				AddInstance(new Customer());
+				ScenarioContext.Current.AddInstance(new Customer());
 			}
 		}
 
@@ -61,15 +60,15 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 		{
 			for (int i = 0; i < count; i++)
 			{
-				AddInstance(new Order());
+				ScenarioContext.Current.AddInstance(new Order());
 			}
 		}
 
 		[Then(@"^I should have (\d+) instances of (.*)$")]
 		public void ThenIShouldHaveExpectedInstancesOfCustomer(int expectedCount, string typeName)
 		{
-			var type = GetTypeByName(typeName);
-			var instances = InstancesOf(type);
+			var type = FeatureContext.Current.GetTypeByName(typeName);
+			var instances = ScenarioContext.Current.InstancesOf(type);
 			var count = instances.Count();
 
 			Assert.That(count, Is.EqualTo(expectedCount));

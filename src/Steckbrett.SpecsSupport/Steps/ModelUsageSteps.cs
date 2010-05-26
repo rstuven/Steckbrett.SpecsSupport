@@ -3,7 +3,7 @@
 namespace Steckbrett.SpecsSupport.Steps
 {
 	[Binding]
-	public class ModelUsageSteps : ModelBindingBase
+	public class ModelUsageSteps
 	{
 		private const string IRemoveTheInstancesOf =
 			@"^I remove the instances? of (\w+)$";
@@ -11,8 +11,8 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(IRemoveTheInstancesOf)]
 		public static void SoIRemoveTheInstancesOf(string typeName)
 		{
-			var type = GetTypeByName(typeName);
-			InstancesOf(type).Clear();
+			var type = FeatureContext.Current.GetTypeByName(typeName);
+			ScenarioContext.Current.InstancesOf(type).Clear();
 		}
 
 		private const string IRemoveAllTheInstances =
@@ -21,9 +21,9 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(IRemoveAllTheInstances)]
 		public static void SoIRemoveAllTheInstances()
 		{
-			foreach (var type in InstanceTypes)
+			foreach (var type in ScenarioContext.Current.InstanceTypes())
 			{
-				InstancesOf(type).Clear();
+				ScenarioContext.Current.InstancesOf(type).Clear();
 			}
 		}
 

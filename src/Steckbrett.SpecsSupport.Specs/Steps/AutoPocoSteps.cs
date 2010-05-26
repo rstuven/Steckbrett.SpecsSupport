@@ -1,18 +1,17 @@
 ﻿using System.Linq;
 using NUnit.Framework;
 using Steckbrett.SpecsSupport.Specs.Model;
-using Steckbrett.SpecsSupport.Steps;
 using TechTalk.SpecFlow;
 
 namespace Steckbrett.SpecsSupport.Specs.Steps
 {
 	[Binding]
-	class AutoPocoSteps : ModelBindingBase
+	class AutoPocoSteps
 	{
 		[Then(@"I should have (\d+) random instances? of Customer")]
 		public void ThenIShouldHaveRandomInstancesOfCustomer(int count)
 		{
-			var customers = InstancesOf<Customer>();
+			var customers = ScenarioContext.Current.InstancesOf<Customer>();
 	
 			Assert.That(customers.Count(), Is.EqualTo(count));
 
@@ -29,7 +28,7 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 		[Then(@"I should have a random instance of Order with 5 random Details")]
 		public void ThenIShouldHaveARandomInstanceOfOrderWith5RandomDetails()
 		{
-			var order = InstanceById<Order>(1);
+			var order = ScenarioContext.Current.InstanceById<Order>(1);
 			
 			Assert.That(order, Is.Not.Null);
 			Assert.That(order.Details.Count(), Is.EqualTo(5));

@@ -15,13 +15,13 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(TheFollowingInstancesOf)]
 		public static IList<object> DoTheFollowingInstancesOf(string typeName, Table table)
 		{
-			var type = GetTypeByName(typeName);
+			var type = FeatureContext.Current.GetTypeByName(typeName);
 
 			// Don't forget this is evaluated in a deferred way.
 			var rows = table.Rows
 				.Select(row => Mapper.Map(row, typeof (TableRow), type));
 
-			var all = InstancesOf(type);
+			var all = ScenarioContext.Current.InstancesOf(type);
 			var result = new List<object>();
 
 			foreach (var item in rows)
@@ -148,7 +148,7 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(TheFollowingInstancesOfPassedTo)]
 		public static void DoTheFollowingInstancesOfPassedTo(string argumentTypeName, string parentMethod, string parentTypeName, string parentId, Table table)
 		{
-			var parent = GetInstanceByIdToken(parentTypeName, parentId);
+			var parent = ScenarioContext.Current.GetInstanceByIdToken(parentTypeName, parentId);
 			var children = DoTheFollowingInstancesOf(argumentTypeName, table);
 			PassToParentMethod(parent, parentMethod, children);
 		}
@@ -159,7 +159,7 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(TheFollowingInstancesPassedTo)]
 		public static void DoTheFollowingInstancesPassedTo(string parentMethod, string parentTypeName, string parentId, Table table)
 		{
-			var parent = GetInstanceByIdToken(parentTypeName, parentId);
+			var parent = ScenarioContext.Current.GetInstanceByIdToken(parentTypeName, parentId);
 			var argumentTypeName = GetArgumentTypeName(parent.GetType(), parentMethod);
 			var children = DoTheFollowingInstancesOf(argumentTypeName, table);
 			PassToParentMethod(parent, parentMethod, children);
@@ -173,12 +173,12 @@ namespace Steckbrett.SpecsSupport.Steps
 		{
 			var	itemsProperty = parentTypeName;
 			var items = DoInstancesOfFromFileSkipTake(-1, -1, itemsTypeName, file);
-			var propertyInfo = GetTypeByName(itemsTypeName).GetProperty(itemsProperty);
+			var propertyInfo = FeatureContext.Current.GetTypeByName(itemsTypeName).GetProperty(itemsProperty);
 
 			var groups = items.GroupBy(o => propertyInfo.GetValue(o, null));
 			foreach (var @group in groups)
 			{
-				var parentId = GetInstanceId<int>(@group.Key);
+				var parentId = FeatureContext.Current.GetInstanceId<int>(@group.Key);
 				var list = GetParentList(parentTypeName, parentId.ToString(), parentProperty);
 				AddToParentList(list, @group.ToList());
 			}
@@ -190,7 +190,7 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(InstancesOfPassedToFromFile)]
 		public static void DoInstancesOfPassedToFromFile(string itemsTypeName, string parentMethod, string parentTypeName, string parentId, string file)
 		{
-			var parent = GetInstanceByIdToken(parentTypeName, parentId);
+			var parent = ScenarioContext.Current.GetInstanceByIdToken(parentTypeName, parentId);
 			var children = DoInstancesOfFromFileSkipTake(-1, -1, itemsTypeName, file);
 			PassToParentMethod(parent, parentMethod, children);
 		}
@@ -201,7 +201,7 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(InstancesPassedToFromFile)]
 		public static void DoInstancesPassedToFromFile(string parentMethod, string parentTypeName, string parentId, string file)
 		{
-			var parent = GetInstanceByIdToken(parentTypeName, parentId);
+			var parent = ScenarioContext.Current.GetInstanceByIdToken(parentTypeName, parentId);
 			var argumentTypeName = GetArgumentTypeName(parent.GetType(), parentMethod);
 			var children = DoInstancesOfFromFileSkipTake(-1, -1, argumentTypeName, file);
 			PassToParentMethod(parent, parentMethod, children);
