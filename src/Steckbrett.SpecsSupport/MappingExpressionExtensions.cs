@@ -28,7 +28,7 @@ namespace Steckbrett.SpecsSupport
 			Func<string, string> propertyNameMapper,
 			Func<TableRow, string, object> getter)
 		{
-			const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+			const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 			foreach (var property in typeof(TDestination).GetProperties(bindingFlags))
 			{
 				if (!property.CanWrite)
