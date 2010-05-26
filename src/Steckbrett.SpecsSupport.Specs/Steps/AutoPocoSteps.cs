@@ -20,9 +20,9 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 			foreach (var customer in customers)
 			{
 				++id;
-				Assert.That(customer.Id, Is.EqualTo(id));
-				Assert.That(customer.FirstName, Is.Not.Null.Or.Empty);
-				Assert.That(customer.LastName, Is.Not.Null.Or.Empty);
+				Assert.That(customer.Id, Is.EqualTo(id), "customer.Id");
+				Assert.That(customer.FirstName, Is.Not.Null.Or.Empty, "customer.FirstName");
+				Assert.That(customer.LastName, Is.Not.Null.Or.Empty, "customer.LastName");
 			}
 		}
 
@@ -38,8 +38,8 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 			foreach (var detail in order.Details)
 			{
 				++id;
-				Assert.That(detail.Id, Is.EqualTo(id));
-				Assert.That(detail.Product, Is.Not.Null.Or.Empty);
+				Assert.That(detail.Id, Is.EqualTo(id), "detail.Id");
+				Assert.That(detail.Product, Is.Not.Null.Or.Empty, "detail.Product");
 			}
 		}
 
