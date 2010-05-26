@@ -128,11 +128,27 @@ Scenario: Mapping from file taking some rows
 	Then I should have 2 instances of Customer
 	And the first instance of Customer should have Id 1
 
+Scenario: Mapping from file taking zero rows
+
+	Given take 0 instances of Customer from file Data\Customers.gherkin
+	Then I should have 0 instances of Customer
+
+Scenario: Mapping from file taking all rows using -1 convention # This is useful in a scenario outline
+
+	Given take -1 instances of Customer from file Data\Customers.gherkin
+	Then I should have 15 instances of Customer
+
 Scenario: Mapping from file skipping some rows
 
 	Given skip 10 instances of Customer from file Data\Customers.gherkin
 	Then I should have 5 instances of Customer
 	And the first instance of Customer should have Id 11
+
+Scenario: Mapping from file skipping zero rows
+
+	Given skip 0 instances of Customer from file Data\Customers.gherkin
+	Then I should have 15 instances of Customer
+	And the first instance of Customer should have Id 1
 
 Scenario: Mapping from file skipping and taking some rows
 

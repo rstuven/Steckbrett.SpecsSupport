@@ -39,29 +39,29 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(InstancesOfFromFile )]
 		public static void DoInstancesOfFromFile(string typeName, string file)
 		{
-			DoInstancesOfFromFileSkipTake(0, 0, typeName, file);
+			DoInstancesOfFromFileSkipTake(-1, -1, typeName, file);
 		}
 
 		private const string InstancesOfFromFileSkip =
-			@"^skip ([\d\w<>]+) instances? of (\w+)\s+from file (.+)$";
+			@"^skip (-?[\d\w<>]+) instances? of (\w+)\s+from file (.+)$";
 		[Given(InstancesOfFromFileSkip)]
 		[When(InstancesOfFromFileSkip)]
 		public static void DoInstancesOfFromFileSkip(int skip, string typeName, string file)
 		{
-			DoInstancesOfFromFileSkipTake(skip, 0, typeName, file);
+			DoInstancesOfFromFileSkipTake(skip, -1, typeName, file);
 		}
 
 		private const string InstancesOfFromFileTake =
-			@"^take ([\d\w<>]+) instances? of (\w+)\s+from file (.+)$";
+			@"^take (-?[\d\w<>]+) instances? of (\w+)\s+from file (.+)$";
 		[Given(InstancesOfFromFileTake)]
 		[When(InstancesOfFromFileTake)]
 		public static void DoInstancesOfFromFileTake(int take, string typeName, string file)
 		{
-			DoInstancesOfFromFileSkipTake(0, take, typeName, file);
+			DoInstancesOfFromFileSkipTake(-1, take, typeName, file);
 		}
 
 		private const string InstancesOfFromFileSkipTake =
-			@"^skip ([\d\w<>]+) and take ([\d\w<>]+) instances? of (\w+)\s+from file (.+)$";
+			@"^skip (-?[\d\w<>]+) and take (-?[\d\w<>]+) instances? of (\w+)\s+from file (.+)$";
 		[Given(InstancesOfFromFileSkipTake)]
 		[When(InstancesOfFromFileSkipTake)]
 		public static IList<object> DoInstancesOfFromFileSkipTake(int skip, int take, string typeName, string file)
@@ -76,8 +76,8 @@ namespace Steckbrett.SpecsSupport.Steps
 				table = new Table(headers);
 
 				var rows = GetRows(reader);
-				if (skip > 0) rows = rows.Skip(skip);
-				if (take > 0) rows = rows.Take(take);
+				if (skip > -1) rows = rows.Skip(skip);
+				if (take > -1) rows = rows.Take(take);
 
 				foreach (var row in rows)
 				{
@@ -93,6 +93,10 @@ namespace Steckbrett.SpecsSupport.Steps
 			while (!reader.EndOfStream)
 			{
 				var row = reader.ReadLine();
+				if (row.TrimStart().StartsWith("#"))
+				{
+					continue;
+				}
 				var values = GetColumns(row);
 				if (values != null)
 				{
@@ -116,10 +120,10 @@ namespace Steckbrett.SpecsSupport.Steps
 		}
 
 		private const string TheFollowingInstancesOfAddedTo = 
-			@"^the following instances? of (\w+) added to (\w+) of (\w+) (\d+):$";
+			@"^the following instances? of (\w+) added to (\w+) of (\w+) (.+):$";
 		[Given(TheFollowingInstancesOfAddedTo)]
 		[When(TheFollowingInstancesOfAddedTo)]
-		public static void DoTheFollowingInstancesOfAddedTo(string listTypeName, string parentProperty, string parentTypeName, int parentId, Table table)
+		public static void DoTheFollowingInstancesOfAddedTo(string listTypeName, string parentProperty, string parentTypeName, string parentId, Table table)
 		{
 			var list = GetParentList(parentTypeName, parentId, parentProperty);
 			var children = DoTheFollowingInstancesOf(listTypeName, table);
@@ -127,10 +131,10 @@ namespace Steckbrett.SpecsSupport.Steps
 		}
 
 		private const string TheFollowingInstancesAddedTo =
-			@"^the following instances? added to (\w+) of (\w+) (\d+):$";
+			@"^the following instances? added to (\w+) of (\w+) (.+):$";
 		[Given(TheFollowingInstancesAddedTo)]
 		[When(TheFollowingInstancesAddedTo)]
-		public static void DoTheFollowingInstancesAddedTo(string parentProperty, string parentTypeName, int parentId, Table table)
+		public static void DoTheFollowingInstancesAddedTo(string parentProperty, string parentTypeName, string parentId, Table table)
 		{
 			var list = GetParentList(parentTypeName, parentId, parentProperty);
 			var listTypeName = GetListTypeName(list);
@@ -139,23 +143,23 @@ namespace Steckbrett.SpecsSupport.Steps
 		}
 
 		private const string TheFollowingInstancesOfPassedTo =
-			@"^the following instances? of (\w+) passed to (\w+) of (\w+) (\d+):$";
+			@"^the following instances? of (\w+) passed to (\w+) of (\w+) (.+):$";
 		[Given(TheFollowingInstancesOfPassedTo)]
 		[When(TheFollowingInstancesOfPassedTo)]
-		public static void DoTheFollowingInstancesOfPassedTo(string argumentTypeName, string parentMethod, string parentTypeName, int parentId, Table table)
+		public static void DoTheFollowingInstancesOfPassedTo(string argumentTypeName, string parentMethod, string parentTypeName, string parentId, Table table)
 		{
-			var parent = GetParent(parentTypeName, parentId);
+			var parent = GetInstanceByIdToken(parentTypeName, parentId);
 			var children = DoTheFollowingInstancesOf(argumentTypeName, table);
 			PassToParentMethod(parent, parentMethod, children);
 		}
 
 		private const string TheFollowingInstancesPassedTo =
-			@"^the following instances? passed to (\w+) of (\w+) (\d+):$";
+			@"^the following instances? passed to (\w+) of (\w+) (.+):$";
 		[Given(TheFollowingInstancesPassedTo)]
 		[When(TheFollowingInstancesPassedTo)]
-		public static void DoTheFollowingInstancesPassedTo(string parentMethod, string parentTypeName, int parentId, Table table)
+		public static void DoTheFollowingInstancesPassedTo(string parentMethod, string parentTypeName, string parentId, Table table)
 		{
-			var parent = GetParent(parentTypeName, parentId);
+			var parent = GetInstanceByIdToken(parentTypeName, parentId);
 			var argumentTypeName = GetArgumentTypeName(parent.GetType(), parentMethod);
 			var children = DoTheFollowingInstancesOf(argumentTypeName, table);
 			PassToParentMethod(parent, parentMethod, children);
@@ -168,38 +172,38 @@ namespace Steckbrett.SpecsSupport.Steps
 		public static void DoInstancesOfAddedToFromFile(string itemsTypeName, string parentProperty, string parentTypeName, string file)
 		{
 			var	itemsProperty = parentTypeName;
-			var items = DoInstancesOfFromFileSkipTake(0, 0, itemsTypeName, file);
+			var items = DoInstancesOfFromFileSkipTake(-1, -1, itemsTypeName, file);
 			var propertyInfo = GetTypeByName(itemsTypeName).GetProperty(itemsProperty);
 
 			var groups = items.GroupBy(o => propertyInfo.GetValue(o, null));
 			foreach (var @group in groups)
 			{
 				var parentId = GetInstanceId<int>(@group.Key);
-				var list = GetParentList(parentTypeName, parentId, parentProperty);
+				var list = GetParentList(parentTypeName, parentId.ToString(), parentProperty);
 				AddToParentList(list, @group.ToList());
 			}
 		}
 
 		private const string InstancesOfPassedToFromFile =
-			@"^instances? of (\w+) passed to (\w+) of (\w+) (\d+)\s+from file (.+)$";
+			@"^instances? of (\w+) passed to (\w+) of (\w+) (.+)\s+from file (.+)$";
 		[Given(InstancesOfPassedToFromFile)]
 		[When(InstancesOfPassedToFromFile)]
-		public static void DoInstancesOfPassedToFromFile(string itemsTypeName, string parentMethod, string parentTypeName, int parentId, string file)
+		public static void DoInstancesOfPassedToFromFile(string itemsTypeName, string parentMethod, string parentTypeName, string parentId, string file)
 		{
-			var parent = GetParent(parentTypeName, parentId);
-			var children = DoInstancesOfFromFileSkipTake(0, 0, itemsTypeName, file);
+			var parent = GetInstanceByIdToken(parentTypeName, parentId);
+			var children = DoInstancesOfFromFileSkipTake(-1, -1, itemsTypeName, file);
 			PassToParentMethod(parent, parentMethod, children);
 		}
 
 		private const string InstancesPassedToFromFile =
-			@"^instances? passed to (\w+) of (\w+) (\d+)\s+from file (.+)$";
+			@"^instances? passed to (\w+) of (\w+) (.+)\s+from file (.+)$";
 		[Given(InstancesPassedToFromFile)]
 		[When(InstancesPassedToFromFile)]
-		public static void DoInstancesPassedToFromFile(string parentMethod, string parentTypeName, int parentId, string file)
+		public static void DoInstancesPassedToFromFile(string parentMethod, string parentTypeName, string parentId, string file)
 		{
-			var parent = GetParent(parentTypeName, parentId);
+			var parent = GetInstanceByIdToken(parentTypeName, parentId);
 			var argumentTypeName = GetArgumentTypeName(parent.GetType(), parentMethod);
-			var children = DoInstancesOfFromFileSkipTake(0, 0, argumentTypeName, file);
+			var children = DoInstancesOfFromFileSkipTake(-1, -1, argumentTypeName, file);
 			PassToParentMethod(parent, parentMethod, children);
 		}
 	

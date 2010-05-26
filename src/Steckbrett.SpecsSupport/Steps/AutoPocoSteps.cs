@@ -51,10 +51,10 @@ namespace Steckbrett.SpecsSupport.Steps
 		}
 
 		private const string RandomInstancesAddedTo =
-			@"^(\d+) random instances? added to (\w+) of (\w+) (\d+)$";
+			@"^(\d+) random instances? added to (\w+) of (\w+) (.+)$";
 		[Given(RandomInstancesAddedTo)]
 		[When(RandomInstancesAddedTo)]
-		public static void DoRandomInstancesAddedTo(int count, string parentProperty, string parentTypeName, int parentId)
+		public static void DoRandomInstancesAddedTo(int count, string parentProperty, string parentTypeName, string parentId)
 		{
 			var list = GetParentList(parentTypeName, parentId, parentProperty);
 			var listTypeName = GetListTypeName(list);
@@ -63,10 +63,10 @@ namespace Steckbrett.SpecsSupport.Steps
 		}
 
 		private const string RandomInstancesOfAddedTo =
-			@"^(\d+) random instances? of (\w+) added to (\w+) of (\w+) (\d+)$";
+			@"^(\d+) random instances? of (\w+) added to (\w+) of (\w+) (.+)$";
 		[Given(RandomInstancesOfAddedTo)]
 		[When(RandomInstancesOfAddedTo)]
-		public static void DoRandomInstancesOfAddedTo(int count, string listTypeName, string parentProperty, string parentTypeName, int parentId)
+		public static void DoRandomInstancesOfAddedTo(int count, string listTypeName, string parentProperty, string parentTypeName, string parentId)
 		{
 			var list = GetParentList(parentTypeName, parentId, parentProperty);
 			var children = DoRandomInstancesOf(count, listTypeName);
@@ -74,24 +74,24 @@ namespace Steckbrett.SpecsSupport.Steps
 		}
 
 		private const string RandomInstancesPassedTo =
-			@"^(\d+) random instances? passed to (\w+) of (\w+) (\d+)$";
+			@"^(\d+) random instances? passed to (\w+) of (\w+) (.+)$";
 		[Given(RandomInstancesPassedTo)]
 		[When(RandomInstancesPassedTo)]
-		public static void DoRandomInstancesPassedTo(int count, string parentMethod, string parentTypeName, int parentId)
+		public static void DoRandomInstancesPassedTo(int count, string parentMethod, string parentTypeName, string parentId)
 		{
-			var parent = GetParent(parentTypeName, parentId);
+			var parent = GetInstanceByIdToken(parentTypeName, parentId);
 			var argumentTypeName = GetArgumentTypeName(parent.GetType(), parentMethod);
 			var children = DoRandomInstancesOf(count, argumentTypeName);
 			PassToParentMethod(parent, parentMethod, children);
 		}
 
 		private const string RandomInstancesOfPassedTo =
-			@"^(\d+) random instances? of (\w+) passed to (\w+) of (\w+) (\d+)$";
+			@"^(\d+) random instances? of (\w+) passed to (\w+) of (\w+) (.+)$";
 		[Given(RandomInstancesOfPassedTo)]
 		[When(RandomInstancesOfPassedTo)]
-		public static void DoRandomInstancesOfPassedTo(int count, string argumentTypeName, string parentMethod, string parentTypeName, int parentId)
+		public static void DoRandomInstancesOfPassedTo(int count, string argumentTypeName, string parentMethod, string parentTypeName, string parentId)
 		{
-			var parent = GetParent(parentTypeName, parentId);
+			var parent = GetInstanceByIdToken(parentTypeName, parentId);
 			var children = DoRandomInstancesOf(count, argumentTypeName);
 			PassToParentMethod(parent, parentMethod, children);
 		}

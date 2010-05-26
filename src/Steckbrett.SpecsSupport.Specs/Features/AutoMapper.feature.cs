@@ -289,6 +289,28 @@ namespace Steckbrett.SpecsSupport.Specs.Features
         }
         
         [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Mapping from file taking zero rows")]
+        public virtual void MappingFromFileTakingZeroRows()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file taking zero rows", ((string[])(null)));
+            this.ScenarioSetup(scenarioInfo);
+            testRunner.Given("take 0 instances of Customer from file Data\\Customers.gherkin");
+            testRunner.Then("I should have 0 instances of Customer");
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Mapping from file taking all rows using -1 convention")]
+        public virtual void MappingFromFileTakingAllRowsUsing_1Convention()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file taking all rows using -1 convention", ((string[])(null)));
+            this.ScenarioSetup(scenarioInfo);
+            testRunner.Given("take -1 instances of Customer from file Data\\Customers.gherkin");
+            testRunner.Then("I should have 15 instances of Customer");
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Mapping from file skipping some rows")]
         public virtual void MappingFromFileSkippingSomeRows()
         {
@@ -297,6 +319,18 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             testRunner.Given("skip 10 instances of Customer from file Data\\Customers.gherkin");
             testRunner.Then("I should have 5 instances of Customer");
             testRunner.And("the first instance of Customer should have Id 11");
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Mapping from file skipping zero rows")]
+        public virtual void MappingFromFileSkippingZeroRows()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file skipping zero rows", ((string[])(null)));
+            this.ScenarioSetup(scenarioInfo);
+            testRunner.Given("skip 0 instances of Customer from file Data\\Customers.gherkin");
+            testRunner.Then("I should have 15 instances of Customer");
+            testRunner.And("the first instance of Customer should have Id 1");
             testRunner.CollectScenarioErrors();
         }
         

@@ -182,7 +182,7 @@ namespace Steckbrett.SpecsSupport.Steps
 			return parameter.ParameterType.FullName;
 		}
 
-		private static MethodInfo GetMethod(Type type, string methodName)
+		protected static MethodInfo GetMethod(Type type, string methodName)
 		{
 			var method = type.GetMethod(methodName);
 			if (method == null)
@@ -192,20 +192,35 @@ namespace Steckbrett.SpecsSupport.Steps
 			return method;
 		}
 
-		protected static object GetParent(string parentTypeName, int parentId)
+
+		protected static T GetInstanceByIdToken<T>(string idToken)
 		{
-			var parentType = GetTypeByName(parentTypeName);
-			var parent = InstanceById(parentType, parentId);
+			return (T) GetInstanceByIdToken(typeof (T).FullName, idToken);
+		}
+
+		protected static object GetInstanceByIdToken(string typeName, string idToken)
+		{
+			var type = GetTypeByName(typeName);
+			object parent = null;
+			int id;
+			if (int.TryParse(idToken, out id))
+			{
+				parent = InstanceById(type, id);
+			}
+			else if (idToken.StartsWith("last"))
+			{
+				parent = InstancesOf(type).LastOrDefault();
+			}
 			if (parent == null)
 			{
-				throw new ArgumentException(string.Format("Not found instance of {0} with id {1}", parentType.FullName, parentId), "parentId");
+				throw new InvalidOperationException(string.Format("Not found instance of {0} with id token '{1}'", type.FullName, idToken));
 			}
 			return parent;
 		}
 
-		protected static object GetParentList(string parentTypeName, int parentId, string parentProperty)
+		protected static object GetParentList(string parentTypeName, string parentId, string parentProperty)
 		{
-			var parent = GetParent(parentTypeName, parentId);
+			var parent = GetInstanceByIdToken(parentTypeName, parentId);
 			var property = parent.GetType().GetProperty(parentProperty).GetGetMethod();
 			var list = property.Invoke(parent, new object[0]);
 			return list;
