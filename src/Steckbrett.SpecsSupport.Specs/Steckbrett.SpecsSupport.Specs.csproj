@@ -89,6 +89,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AutoPoco.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Assertions.feature.cs">
+      <DependentUpon>Assertions.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Features\ModelUsage.feature.cs">
       <DependentUpon>ModelUsage.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -122,6 +127,10 @@
     <None Include="Features\AutoPoco.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AutoPoco.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Assertions.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Assertions.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\ModelUsage.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

@@ -27,6 +27,12 @@ namespace Steckbrett.SpecsSupport
 			return list as List<object>;
 		}
 
+		public static IList<object> InstancesOf(this ScenarioContext context, string typeName)
+		{
+			var type = FeatureContext.Current.GetTypeByName(typeName);
+			return context.InstancesOf(type);
+		}
+
 		public static IEnumerable<T> InstancesOf<T>(this ScenarioContext context)
 		{
 			return context.InstancesOf(typeof(T)).Cast<T>();

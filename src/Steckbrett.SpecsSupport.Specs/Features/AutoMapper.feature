@@ -10,7 +10,7 @@ Scenario: Mapping table to Customer
 	| FirstName | LastName |
 	| John      | Doe      |
 	
-	Then I should have a Customer called John Doe
+	Then a Customer called John Doe should exist
 
 Scenario: Mapping consecutive tables to Customer
 	
@@ -22,7 +22,7 @@ Scenario: Mapping consecutive tables to Customer
 	| FirstName | LastName |
 	| Peter     | Smith    |
 
-	Then I should have 2 instances of Customer
+	Then 2 instances of Customer should exist
 
 Scenario: Mapping self-referencing table to Customer
 	
@@ -114,46 +114,46 @@ Scenario: Mapping tables to Order and Details, pass to parent method with implic
 Scenario: Mapping from file
 
 	Given instances of Customer from file Data\Customers.gherkin
-	Then I should have 15 instances of Customer
+	Then 15 instances of Customer should exist
 
 Scenario: Mapping consecutively from file
 
 	Given instances of Customer from file Data\Customers.gherkin
 	And instances of Customer from file Data\Customers.gherkin
-	Then I should have 30 instances of Customer
+	Then 30 instances of Customer should exist
 	
 Scenario: Mapping from file taking some rows
 
 	Given take 2 instances of Customer from file Data\Customers.gherkin
-	Then I should have 2 instances of Customer
+	Then 2 instances of Customer should exist
 	And the first instance of Customer should have Id 1
 
 Scenario: Mapping from file taking zero rows
 
 	Given take 0 instances of Customer from file Data\Customers.gherkin
-	Then I should have 0 instances of Customer
+	Then 0 instances of Customer should exist
 
 Scenario: Mapping from file taking all rows using -1 convention # This is useful in a scenario outline
 
 	Given take -1 instances of Customer from file Data\Customers.gherkin
-	Then I should have 15 instances of Customer
+	Then 15 instances of Customer should exist
 
 Scenario: Mapping from file skipping some rows
 
 	Given skip 10 instances of Customer from file Data\Customers.gherkin
-	Then I should have 5 instances of Customer
+	Then 5 instances of Customer should exist
 	And the first instance of Customer should have Id 11
 
 Scenario: Mapping from file skipping zero rows
 
 	Given skip 0 instances of Customer from file Data\Customers.gherkin
-	Then I should have 15 instances of Customer
+	Then 15 instances of Customer should exist
 	And the first instance of Customer should have Id 1
 
 Scenario: Mapping from file skipping and taking some rows
 
 	Given skip 10 and take 2 instances of Customer from file Data\Customers.gherkin
-	Then I should have 2 instances of Customer
+	Then 2 instances of Customer should exist
 	And the first instance of Customer should have Id 11
 
 Scenario: Mapping from file and passing to method of instance with explicit typing

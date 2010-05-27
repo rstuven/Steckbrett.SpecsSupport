@@ -8,7 +8,7 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 	[Binding]
 	class AutoPocoSteps
 	{
-		[Then(@"I should have (\d+) random instances? of Customer")]
+		[Then(@"(\d+) random instances? of Customer should exist")]
 		public void ThenIShouldHaveRandomInstancesOfCustomer(int count)
 		{
 			var customers = ScenarioContext.Current.InstancesOf<Customer>();
@@ -25,7 +25,7 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 			}
 		}
 
-		[Then(@"I should have a random instance of Order with 5 random Details")]
+		[Then(@"a random instance of Order with 5 random Details should exist")]
 		public void ThenIShouldHaveARandomInstanceOfOrderWith5RandomDetails()
 		{
 			var order = ScenarioContext.Current.InstanceById<Order>(1);

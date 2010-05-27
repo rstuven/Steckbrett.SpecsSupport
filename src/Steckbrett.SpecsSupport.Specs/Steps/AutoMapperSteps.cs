@@ -8,7 +8,7 @@ namespace Steckbrett.SpecsSupport.Specs.Steps
 	[Binding]
 	class AutoMapperSteps
 	{
-		[Then(@"I should have a Customer called John Doe")]
+		[Then(@"a Customer called John Doe should exist")]
 		public void ThenIShouldHaveACustomerCalledJohnDoe()
 		{
 			var customer = ScenarioContext.Current.InstancesOf<Customer>()

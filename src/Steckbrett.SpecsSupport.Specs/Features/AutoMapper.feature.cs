@@ -62,7 +62,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
                         "John",
                         "Doe"});
             testRunner.Given("the following instance of Customer:", ((string)(null)), table1);
-            testRunner.Then("I should have a Customer called John Doe");
+            testRunner.Then("a Customer called John Doe should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -86,7 +86,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
                         "Peter",
                         "Smith"});
             testRunner.Given("the following instance of Customer:", ((string)(null)), table3);
-            testRunner.Then("I should have 2 instances of Customer");
+            testRunner.Then("2 instances of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -260,7 +260,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("instances of Customer from file Data\\Customers.gherkin");
-            testRunner.Then("I should have 15 instances of Customer");
+            testRunner.Then("15 instances of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -272,7 +272,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("instances of Customer from file Data\\Customers.gherkin");
             testRunner.And("instances of Customer from file Data\\Customers.gherkin");
-            testRunner.Then("I should have 30 instances of Customer");
+            testRunner.Then("30 instances of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -283,7 +283,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file taking some rows", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("take 2 instances of Customer from file Data\\Customers.gherkin");
-            testRunner.Then("I should have 2 instances of Customer");
+            testRunner.Then("2 instances of Customer should exist");
             testRunner.And("the first instance of Customer should have Id 1");
             testRunner.CollectScenarioErrors();
         }
@@ -295,7 +295,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file taking zero rows", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("take 0 instances of Customer from file Data\\Customers.gherkin");
-            testRunner.Then("I should have 0 instances of Customer");
+            testRunner.Then("0 instances of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -306,7 +306,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file taking all rows using -1 convention", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("take -1 instances of Customer from file Data\\Customers.gherkin");
-            testRunner.Then("I should have 15 instances of Customer");
+            testRunner.Then("15 instances of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -317,7 +317,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file skipping some rows", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("skip 10 instances of Customer from file Data\\Customers.gherkin");
-            testRunner.Then("I should have 5 instances of Customer");
+            testRunner.Then("5 instances of Customer should exist");
             testRunner.And("the first instance of Customer should have Id 11");
             testRunner.CollectScenarioErrors();
         }
@@ -329,7 +329,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file skipping zero rows", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("skip 0 instances of Customer from file Data\\Customers.gherkin");
-            testRunner.Then("I should have 15 instances of Customer");
+            testRunner.Then("15 instances of Customer should exist");
             testRunner.And("the first instance of Customer should have Id 1");
             testRunner.CollectScenarioErrors();
         }
@@ -341,7 +341,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mapping from file skipping and taking some rows", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("skip 10 and take 2 instances of Customer from file Data\\Customers.gherkin");
-            testRunner.Then("I should have 2 instances of Customer");
+            testRunner.Then("2 instances of Customer should exist");
             testRunner.And("the first instance of Customer should have Id 11");
             testRunner.CollectScenarioErrors();
         }

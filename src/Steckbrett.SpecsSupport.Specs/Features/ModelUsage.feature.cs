@@ -54,8 +54,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Getting not created instance by Id", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
-            testRunner.When("I get an instance of Customer with Id 123");
-            testRunner.Then("I should get null");
+            testRunner.Then("an instance of Customer with Id 123 should not exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -66,8 +65,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Getting created instance by Id", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("an instance of Customer with Id 123");
-            testRunner.When("I get an instance of Customer with Id 123");
-            testRunner.Then("I should get an instance of Customer with Id 123");
+            testRunner.Then("an instance of Customer with Id 123 should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -78,7 +76,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generating a number of instances", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("I created 3 instances of Customer");
-            testRunner.Then("I should have 3 instances of Customer");
+            testRunner.Then("3 instances of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -91,8 +89,8 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             testRunner.Given("I created 3 instances of Customer");
             testRunner.And("I created 2 instances of Order");
             testRunner.When("I remove the instances of Customer");
-            testRunner.Then("I should have 0 instances of Customer");
-            testRunner.Then("I should have 2 instances of Order");
+            testRunner.Then("0 instances of Customer should exist");
+            testRunner.Then("2 instances of Order should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -105,8 +103,8 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             testRunner.Given("I created 3 instances of Customer");
             testRunner.And("I created 2 instances of Order");
             testRunner.When("I remove all the instances");
-            testRunner.Then("I should have 0 instances of Customer");
-            testRunner.Then("I should have 0 instances of Order");
+            testRunner.Then("0 instances of Customer should exist");
+            testRunner.Then("0 instances of Order should exist");
             testRunner.CollectScenarioErrors();
         }
     }

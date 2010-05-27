@@ -11,8 +11,7 @@ namespace Steckbrett.SpecsSupport.Steps
 		[When(IRemoveTheInstancesOf)]
 		public static void SoIRemoveTheInstancesOf(string typeName)
 		{
-			var type = FeatureContext.Current.GetTypeByName(typeName);
-			ScenarioContext.Current.InstancesOf(type).Clear();
+			ScenarioContext.Current.InstancesOf(typeName).Clear();
 		}
 
 		private const string IRemoveAllTheInstances =

@@ -56,7 +56,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generating a random instance", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("a random instance of Customer");
-            testRunner.Then("I should have 1 random instance of Customer");
+            testRunner.Then("1 random instance of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -67,7 +67,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generating a number of random instances", ((string[])(null)));
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("3 random instances of Customer");
-            testRunner.Then("I should have 3 random instances of Customer");
+            testRunner.Then("3 random instances of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -79,7 +79,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("3 random instances of Customer");
             testRunner.Given("2 random instances of Customer");
-            testRunner.Then("I should have 5 random instances of Customer");
+            testRunner.Then("5 random instances of Customer should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -91,7 +91,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("a random instance of Order");
             testRunner.And("5 random instances of Detail added to Details of Order 1");
-            testRunner.Then("I should have a random instance of Order with 5 random Details");
+            testRunner.Then("a random instance of Order with 5 random Details should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -103,7 +103,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("a random instance of Order");
             testRunner.And("5 random instances added to Details of Order 1");
-            testRunner.Then("I should have a random instance of Order with 5 random Details");
+            testRunner.Then("a random instance of Order with 5 random Details should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -115,7 +115,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("a random instance of Order");
             testRunner.And("5 random instances of Detail passed to AddDetail of Order 1");
-            testRunner.Then("I should have a random instance of Order with 5 random Details");
+            testRunner.Then("a random instance of Order with 5 random Details should exist");
             testRunner.CollectScenarioErrors();
         }
         
@@ -127,7 +127,7 @@ namespace Steckbrett.SpecsSupport.Specs.Features
             this.ScenarioSetup(scenarioInfo);
             testRunner.Given("a random instance of Order");
             testRunner.And("5 random instances passed to AddDetail of Order 1");
-            testRunner.Then("I should have a random instance of Order with 5 random Details");
+            testRunner.Then("a random instance of Order with 5 random Details should exist");
             testRunner.CollectScenarioErrors();
         }
     }
