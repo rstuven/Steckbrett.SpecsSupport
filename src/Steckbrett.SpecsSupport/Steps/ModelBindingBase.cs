@@ -12,7 +12,7 @@ namespace Steckbrett.SpecsSupport.Steps
 	{
 		protected static IGenerationSessionFactory GenerationSessionFactory
 		{
-			get { return (IGenerationSessionFactory)FeatureContext.Current["GenerationSessionFactory"]; }
+			get { return FeatureContext.Current.GetValueOrDefault("GenerationSessionFactory", () => (IGenerationSessionFactory)null); }
 			set { FeatureContext.Current["GenerationSessionFactory"] = value; }
 		}
 

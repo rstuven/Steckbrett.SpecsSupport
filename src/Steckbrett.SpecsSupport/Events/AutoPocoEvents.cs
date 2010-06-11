@@ -9,7 +9,10 @@ namespace Steckbrett.SpecsSupport.Events
 		[BeforeScenario("model_mapping")]
 		public void InitializeGenerationSession()
 		{
-			GenerationSession = GenerationSessionFactory.CreateSession();
+			if (GenerationSessionFactory != null)
+			{
+				GenerationSession = GenerationSessionFactory.CreateSession();
+			}
 		}
 	}
 }
