@@ -1,15 +1,15 @@
 <!-- -*- markdown -*- -->
-###  SpecFlow + AutoMapper + AutoPoco = Steckbrett.SpecsSupport
+##  SpecFlow + AutoMapper + AutoPoco = Steckbrett.SpecsSupport
 
 **Steckbrett.SpecsSupport** is a library of helper "steps" to easily generate model instances in [SpecFlow][6] specifications. It integrates [AutoPoco][7] and [AutoMapper][8] libraries.
 
-   [6]: http://www.specflow.org/
-   [7]: http://autopoco.codeplex.com/
-   [8]: http://automapper.codeplex.com/
+   [6]: https://www.specflow.org/
+   [7]: https://autopoco.codeplex.com/
+   [8]: https://automapper.org/
 
-Apart from configuring the model, there is only one extra requirement to use these helpers in specifications: In order to activate the model mapping configurations, you have to tag the feature with _`@model_mapping`_
+Apart from configuring the model, there is only one extra requirement to use these helpers in specifications: In order to activate the model mapping configurations, you have to tag the feature with `@model_mapping`.
 
-Let's see the whole thing in action using a project that provides sample usage features. In [App.config][9], SpecFlow is instructed to include steps defined in Steckbrett.SpecsSupport.dll assembly (<stepAssemblies> section). A simple [sample model][10] is configured in [ModelMappingEvents.cs][11] . Below you can see some sample scenarios: the steps shown in red are helpers defined in `Steckbrett.SpecsSupport.dll` ; underscored fragments are step arguments.
+Let's see the whole thing in action using a project that provides sample usage features. In [App.config][9], SpecFlow is instructed to include steps defined in `Steckbrett.SpecsSupport.dll` assembly (`<stepAssemblies>` section). A simple [sample model][10] is configured in [ModelMappingEvents.cs][11]. Below you can see some sample scenarios: the steps shown in red are helpers defined in `Steckbrett.SpecsSupport.dll` ; underscored fragments are step arguments.
 
    [9]: ./src/Steckbrett.SpecsSupport.Specs/App.config
    [10]: ./src/Steckbrett.SpecsSupport.Specs/Model/
@@ -19,63 +19,68 @@ A sample scenario of (pseudo-)random instance generation (see more in [AutoPoco.
 
    [12]: ./src/Steckbrett.SpecsSupport.Specs/Features/AutoPoco.feature
 
-    Scenario: Generating a consecutive number of random instances
-    Given 3 random instances of Customer
-    Given 2 random instances of Customer
-    Then I should have 5 random instances of Customer
+```gherkin
+Scenario: Generating a consecutive number of random instances
+Given 3 random instances of Customer
+Given 2 random instances of Customer
+Then I should have 5 random instances of Customer
+```
 
 Some sample scenarios of table mappings (see more in [AutoMapper.feature][13]):
 
    [13]: ./src/Steckbrett.SpecsSupport.Specs/Features/AutoMapper.feature
 
-    Scenario: Mapping table to Customer
-    Given the following instance of Customer:
-    | FirstName | LastName |
-    | John      | Doe      |
-    Then I should have a Customer called John Doe
+```gherkin
+Scenario: Mapping table to Customer
+Given the following instance of Customer:
+| FirstName | LastName |
+| John      | Doe      |
+Then I should have a Customer called John Doe
 
-    Scenario: Mapping tables to Order and Details, add to parent list with implicit typing
-    Given the following instance of Order:
-    | Id |
-    |  1 |
-    And the following instances added to Details of Order 1:
-    | Price | Quantity |
-    |   150 |        2 |
-    |   200 |        1 |
-    When I calculate Order 1 total
-    Then I should get total 500 in Order 1
+Scenario: Mapping tables to Order and Details, add to parent list with implicit typing
+Given the following instance of Order:
+| Id |
+|  1 |
+And the following instances added to Details of Order 1:
+| Price | Quantity |
+|   150 |        2 |
+|   200 |        1 |
+When I calculate Order 1 total
+Then I should get total 500 in Order 1
 
-    Scenario: Mapping self-referencing table to Customer
-    Given the following instance of Customer:
-    | Id | FirstName | LastName | Parent |
-    |  1 | John      | Doe      |   null |
-    |  2 | John      | Doe      |      1 |
-    Then I should have Customer 1 referencing to no parent customer
-    And I should have Customer 2 referencing to parent customer 1
+Scenario: Mapping self-referencing table to Customer
+Given the following instance of Customer:
+| Id | FirstName | LastName | Parent |
+|  1 | John      | Doe      |   null |
+|  2 | John      | Doe      |      1 |
+Then I should have Customer 1 referencing to no parent customer
+And I should have Customer 2 referencing to parent customer 1
 
-    Scenario: Mapping from file
-    Given instances of Customer from file Data\Customers.gherkin
-    Then I should have 15 instances of Customer
+Scenario: Mapping from file
+Given instances of Customer from file Data\Customers.gherkin
+Then I should have 15 instances of Customer
+```
 
 You can access the model instances from your steps using extension methods on `ScenarioContext`. For [example][14]:
 
    [14]: ./src/Steckbrett.SpecsSupport.Specs/Steps/AutoMapperSteps.cs
 
-    [Then(@"I should get total (.+) in Order (\d+)")]
-    public void ThenIShouldGetTotalInOrder(decimal total, int orderId)
-    {
-        var order = ScenarioContext.Current.InstanceById<Order>(orderId);
-        Assert.That(order.Total, Is.EqualTo(total));
-    }
+```cs
+[Then(@"I should get total (.+) in Order (\d+)")]
+public void ThenIShouldGetTotalInOrder(decimal total, int orderId)
+{
+    var order = ScenarioContext.Current.InstanceById<Order>(orderId);
+    Assert.That(order.Total, Is.EqualTo(total));
+}
 
-    [Then(@"the first instance of Customer should have Id (\d+)")]
-    public void ThenTheFirstInstanceOfCustomerShouldHaveId(int id)
-    {
-        var customer = ScenarioContext.Current.InstancesOf<Customer>().FirstOrDefault();
-        Assert.That(customer, Is.Not.Null);
-        Assert.That(customer.Id, Is.EqualTo(id));
-    }
-
+[Then(@"the first instance of Customer should have Id (\d+)")]
+public void ThenTheFirstInstanceOfCustomerShouldHaveId(int id)
+{
+    var customer = ScenarioContext.Current.InstancesOf<Customer>().FirstOrDefault();
+    Assert.That(customer, Is.Not.Null);
+    Assert.That(customer.Id, Is.EqualTo(id));
+}
+```
 
 That's all folks! All the trickiness of model instantiation is hidden behind the helper steps so you can focus on writing gorgeous specs.
 
@@ -86,8 +91,8 @@ _________________________________________________________
 **UPDATE 2010-05-27:** Inspired by [Pickle][15] (thanks to [Jonas Bandi][16]
 for the tip), I've just added some assertions steps. See [Assertions.feature][17] for examples.
 
-   [15]: http://ianwhite.github.com/pickle/
-   [16]: http://blog.jonasbandi.net/
+   [15]: https://ianwhite.github.io/pickle/
+   [16]: https://blog.jonasbandi.net/
    [17]: ./src/Steckbrett.SpecsSupport.Specs/Features/Assertions.feature
 
 _______________________________________________________
