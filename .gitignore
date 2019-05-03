@@ -1,11 +1,8 @@
-# use glob syntax
-syntax: glob
-
 # Ignore log file
 log.txt
 
-# Ignore Subversion diretories
-.svn/
+# Ignore git diretories
+.git/
 
 # Ignore Visual Studio 2008 files
 *.obj
@@ -28,12 +25,17 @@ log.txt
 *.lib
 *.sbr
 *.scc
-[Bb]in
-[Db]ebug*/
+bin/
+Bin/
+Debug*/
+debug*/
 obj/
-[Rr]elease*/
+release*/
+Release*/
 _ReSharper*/
-[Tt]est[Rr]esult*
-[Bb]uild[Ll]og.*
+testresult*
+TestResult*
+buildlog.*
+BuildLog.*
 *.resharper
 *.orig
