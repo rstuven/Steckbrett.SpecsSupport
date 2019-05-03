@@ -1,4 +1,4 @@
-﻿<!-- -*- markdown -*- -->
+<!-- -*- markdown -*- -->
 ###  SpecFlow + AutoMapper + AutoPoco = Steckbrett.SpecsSupport
 
 **Steckbrett.SpecsSupport** is a library of helper "steps" to easily generate model instances in [SpecFlow][6] specifications. It integrates [AutoPoco][7] and [AutoMapper][8] libraries.
@@ -11,13 +11,13 @@ Apart from configuring the model, there is only one extra requirement to use the
 
 Let's see the whole thing in action using a project that provides sample usage features. In [App.config][9], SpecFlow is instructed to include steps defined in Steckbrett.SpecsSupport.dll assembly (<stepAssemblies> section). A simple [sample model][10] is configured in [ModelMappingEvents.cs][11] . Below you can see some sample scenarios: the steps shown in red are helpers defined in `Steckbrett.SpecsSupport.dll` ; underscored fragments are step arguments.
 
-   [9]: http://bitbucket.org/rstuven/steckbrett.specssupport/src/tip/src/Steckbrett.SpecsSupport.Specs/App.config
-   [10]: http://bitbucket.org/rstuven/steckbrett.specssupport/src/tip/src/Steckbrett.SpecsSupport.Specs/Model/
-   [11]: http://bitbucket.org/rstuven/steckbrett.specssupport/src/tip/src/Steckbrett.SpecsSupport.Specs/Events/ModelMappingEvents.cs
+   [9]: ./src/Steckbrett.SpecsSupport.Specs/App.config
+   [10]: ./src/Steckbrett.SpecsSupport.Specs/Model/
+   [11]: ./src/Steckbrett.SpecsSupport.Specs/Events/ModelMappingEvents.cs
 
 A sample scenario of (pseudo-)random instance generation (see more in [AutoPoco.feature][12]):
 
-   [12]: http://bitbucket.org/rstuven/steckbrett.specssupport/src/tip/src/Steckbrett.SpecsSupport.Specs/Features/AutoPoco.feature
+   [12]: ./src/Steckbrett.SpecsSupport.Specs/Features/AutoPoco.feature
 
     Scenario: Generating a consecutive number of random instances
     Given 3 random instances of Customer
@@ -26,7 +26,7 @@ A sample scenario of (pseudo-)random instance generation (see more in [AutoPoco.
 
 Some sample scenarios of table mappings (see more in [AutoMapper.feature][13]):
 
-   [13]: http://bitbucket.org/rstuven/steckbrett.specssupport/src/tip/src/Steckbrett.SpecsSupport.Specs/Features/AutoMapper.feature
+   [13]: ./src/Steckbrett.SpecsSupport.Specs/Features/AutoMapper.feature
 
     Scenario: Mapping table to Customer
     Given the following instance of Customer:
@@ -59,7 +59,7 @@ Some sample scenarios of table mappings (see more in [AutoMapper.feature][13]):
 
 You can access the model instances from your steps using extension methods on `ScenarioContext`. For [example][14]:
 
-   [14]: http://bitbucket.org/rstuven/steckbrett.specssupport/src/tip/src/Steckbrett.SpecsSupport.Specs/Steps/AutoMapperSteps.cs
+   [14]: ./src/Steckbrett.SpecsSupport.Specs/Steps/AutoMapperSteps.cs
 
     [Then(@"I should get total (.+) in Order (\d+)")]
     public void ThenIShouldGetTotalInOrder(decimal total, int orderId)
@@ -88,7 +88,7 @@ for the tip), I've just added some assertions steps. See [Assertions.feature][17
 
    [15]: http://ianwhite.github.com/pickle/
    [16]: http://blog.jonasbandi.net/
-   [17]: http://bitbucket.org/rstuven/steckbrett.specssupport/src/tip/src/Steckbrett.SpecsSupport.Specs/Features/Assertions.feature
+   [17]: ./src/Steckbrett.SpecsSupport.Specs/Features/Assertions.feature
 
 _______________________________________________________
 
